@@ -7,12 +7,15 @@ It enforces the use of tags.
 
 ```
 module "s3_elb_log" {
-  source = "/path/to/module/s3_elb_access_logs"
-
+  source = "git::https://github.com/Cimpress-MCP/terraform.git//s3_elb_access_logs"
+  
+  # name of bucket to create.  Must be unique within AWS
   bucket_name = "s3-elb-logs"
 
+  # Project this bucket is assigned to
   project = "foobar"
 
+  # Name of your squad
   squad = "Ops"
 }
 

@@ -79,7 +79,7 @@ Advanced options (Automatically defined availability zones with manual networkin
 
 ```hcl
 module "vpc" {
-  source = "<path to module>"
+  source = ""git::https://github.com/Cimpress-MCP/terraform.git//vpc"
 
   vpc_name        = "my-vpc"
   my_cidr_block   = "10.0.0.0/16"
@@ -95,7 +95,7 @@ Advanced options (Custom tags)
 
 ```hcl
 module "vpc" {
-  source = "path to module"
+  source = ""git::https://github.com/Cimpress-MCP/terraform.git//vpc"
 
   vpc_name        = "my-vpc"
   vpc_cidr_block  = "10.100.0.0/16"

@@ -11,7 +11,7 @@ resource "aws_subnet" "private" {
   cidr_block        = "${(var.automatic_networking == "1" ? cidrsubnet(aws_vpc.vpc.cidr_block, (var.manual_azs == "1" ? length(var.azs) : var.az_limit), count.index) : var.private_subnets[count.index])}"
   availability_zone = "${(var.automatic_networking == "1" ? (var.manual_azs == "1" ? var.azs[count.index] : data.aws_availability_zones.available.names[count.index]) : (var.automatic_azs == "1" ? data.aws_availability_zones.available.names[count.index] : var.azs[count.index]))}"
 
-  tags              = "${merge(var.default_tags, var.tags, map("Name", format("%s-subnet-private-%s", var.vpc_name, (var.automatic_networking == "1" ? (var.automatic_networking == "1" ? var.azs[count.index] : data.aws_availability_zones.available.names[count.index]) : (var.automatic_azs == "1" ? data.aws_availability_zones.available.names[count.index] : var.azs[count.index])))), map("Created", format("%s", timestamp())))}"
+  tags              = "${merge(var.default_tags, var.tags, map("Name", format("%s-subnet-private-%s", var.vpc_name, (var.automatic_networking == "1" ? (var.automatic_networking == "1" ? var.azs[count.index] : data.aws_availability_zones.available.names[count.index]) : (var.automatic_azs == "1" ? data.aws_availability_zones.available.names[count.index] : var.azs[count.index])))), map("Env","private"), map("Created", format("%s", timestamp())))}"
 
   lifecycle {
       ignore_changes = "tags.Created"
@@ -33,7 +33,7 @@ resource "aws_subnet" "public" {
 
   map_public_ip_on_launch = "${var.map_public_ip_on_launch}"
 
-  tags                    = "${merge(var.default_tags, var.tags, map("Name", format("%s-subnet-public-%s", var.vpc_name, (var.automatic_networking == "1" ? (var.automatic_networking == "1" ? var.azs[count.index] : data.aws_availability_zones.available.names[count.index]) : (var.automatic_azs == "1" ? data.aws_availability_zones.available.names[count.index] : var.azs[count.index])))), map("Created", format("%s", timestamp())))}"
+  tags                    = "${merge(var.default_tags, var.tags, map("Name", format("%s-subnet-public-%s", var.vpc_name, (var.automatic_networking == "1" ? (var.automatic_networking == "1" ? var.azs[count.index] : data.aws_availability_zones.available.names[count.index]) : (var.automatic_azs == "1" ? data.aws_availability_zones.available.names[count.index] : var.azs[count.index])))), map("Env","public"), map("Created", format("%s", timestamp())))}"
 
   lifecycle {
       ignore_changes = "tags.Created"

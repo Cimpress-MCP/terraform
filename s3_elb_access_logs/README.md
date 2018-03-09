@@ -14,9 +14,6 @@ module "s3_elb_log" {
 
   # Project this bucket is assigned to
   project = "foobar"
-
-  # Name of your squad
-  squad = "Ops"
 }
 
 # Create a new load balancer
@@ -53,7 +50,6 @@ resource "aws_elb" "bar" {
   tags {
     Name = "foobar-terraform-elb"
     Project = "foobar"
-    Squad = "Ops"
   }
 }
 ```

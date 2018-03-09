@@ -28,8 +28,3 @@ variable "project" {
   type = "string"
   description = "Project to which the bucket belongs to"
 }
-
-variable "squad" {
-  type = "string"
-  description = "Bucket's squad"
-}

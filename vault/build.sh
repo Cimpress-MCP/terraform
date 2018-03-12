@@ -62,6 +62,22 @@ function build_cluster() {
     cd ../..
 }
 
+function teardown_manual() {
+    s3_name="${TF_VAR_cluster_name}-vault-storage"
+
+    printf "$blue" "Destroying S3 bucket $s3_name"
+    objs=$(aws s3api list-objects --bucket $s3_name --query 'Contents[*].Key' --output text)
+    for o in $objs; do
+        aws s3api delete-object --bucket $s3_name --key "${o}"
+    done
+
+    printf "$blue" "Destroying data in Parameter Store"
+    params=$(aws ssm describe-parameters --filters "Key=Name,Values=${TF_VAR_cluster_name}." --query 'Parameters[*].Name' --output text)
+    for p in $params; do
+        aws ssm delete-parameter --name "${p}"
+    done
+}
+
 function teardown_cluster() {
     printf "$blue" "Destroying Vault cluster $TF_VAR_cluster_name"
     cd $SCRIPT_DIR/components/vault-cluster
@@ -74,6 +90,7 @@ function teardown_cluster() {
 }
 
 function teardown_packer() {
+    printf "$blue" "Destroying packer infrastructure"
     cd $SCRIPT_DIR/components/vault-ami
     terraform destroy -force
     cd ../..
@@ -138,7 +155,10 @@ function help() {
     printf "$green" " --squad=SQUAD              (Squad name to tag instances with)"
     printf "$green" " --zone=DNS_ZONE            (Route 53 zone to add cluster to, ex: cimpress.io)"
     printf "$green" " --no-ami                   (Do not build AMI, useful for quick cluster rebuilds)"
-    printf "$green" " --destroy                  (Teardown and destroy your vault cluster)"
+    printf "$green" " --destroy                  (Must specify ONE of the flag below)"
+    printf "$green" "   --all                    (Teardown and destroy your vault cluster and data)"
+    printf "$green" "   --infra                  (Teardown and destroy your vault cluster only)"
+    printf "$green" "   --data                   (Destroy your vault data only)"
 
     exit 0
 }
@@ -209,8 +229,18 @@ function check_parameters() {
         --destroy)
         DESTROY=1
         ;;
+        --all)
+        D_ALL=1
+        ;;
+        --data)
+        D_DATA=1
+        ;;
+        --infra)
+        D_INFRA=1
+        ;;
         *)
         printf "$red" "Unknown option given: " $i
+        exit 1
         ;;
 
     esac
@@ -286,6 +316,10 @@ function check_parameters() {
         AWS_ACCOUNT_ID=`aws iam get-user --profile $TF_VAR_aws_profile --output json \
                 | awk '/arn:aws:/{print $2}' \
                 | grep -Eo '[[:digit:]]{12}'`
+
+        if  [ "$?" == "1" ]; then
+            exit 1
+        fi
         export TF_VAR_aws_account_id=$AWS_ACCOUNT_ID
     fi
 }
@@ -306,9 +340,32 @@ fi
 write_config
 
 if [ "$DESTROY" == 1 ]; then
-    teardown_packer
-    teardown_cluster
-    exit 0
+    if [ "$D_ALL" == 1 ] && [[ "$D_INFRA" == 1  || "$D_DATA" == 1 ]]; then
+        printf "$red" "Cannot specify --all with --data and/or -infra"
+        exit 1
+    elif [  "$D_INFRA" == 1 ] && [[ "$D_DATA" == 1 || "$D_ALL" == 1 ]]; then
+        printf "$red" "Cannot specify --infra with --data and/or --all"
+        exit 1
+    elif [  "$D_DATA" == 1 ] && [[ "$D_INFRA" == 1 || "$D_ALL" == 1 ]]; then
+        printf "$red" "Cannot specify --data with --infra and/or --all"
+        exit 1
+    fi
+
+    if [ "$D_ALL" == 1 ]; then
+        teardown_packer
+        teardown_manual
+        teardown_cluster
+    elif [ "$D_INFRA" == 1 ]; then
+        teardown_packer
+        teardown_cluster
+    elif [ "$D_DATA" == 1 ]; then
+        teardown_manual
+    else
+        printf "$red" "You must specify one of --data --infra or --all"
+        exit 1
+    fi
+
+    exit $?
 fi
 
 if [ -z "$NO_AMI" ]; then

@@ -1,4 +1,0 @@
-{
-  "policy": "path \"aws/creds/*\" { capabilities = [\"read\"] }"
-}
-

@@ -1,4 +1,0 @@
-{
-    "password": "myPasswordIsBad",
-    "policies": "admin,aws-ips-admin,aws-readonly,create-token"
-}

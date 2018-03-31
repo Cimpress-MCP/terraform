@@ -1,8 +1,6 @@
 # S3 ELB Access Log
 This terraform module allows you to create an S3 bucket for ELB access logs.
 
-It enforces the use of tags.
-
 # Example
 
 ```
@@ -12,8 +10,11 @@ module "s3_elb_log" {
   # name of bucket to create.  Must be unique within AWS
   bucket_name = "s3-elb-logs"
 
-  # Project this bucket is assigned to
-  project = "foobar"
+  # extra tags
+  extra_tags = {
+    "Project" = "myproject",
+    "Owner" = "davide barbato"
+  }
 }
 
 # Create a new load balancer

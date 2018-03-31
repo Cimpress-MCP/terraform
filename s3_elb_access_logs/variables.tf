@@ -24,7 +24,15 @@ variable "force_destroy" {
 ############## TAGS #################
 #
 #
-variable "project" {
-  type = "string"
-  description = "Project to which the bucket belongs to"
+variable "extra_tags" {
+  type = "map"
+  description = "A map of additional tags to add to the S3 buckets. Each element in the map must have the key = value format"
+
+  # example:
+  # extra_tags = {
+  #   "Environment" = "Dev",
+  #   "Squad" = "Ops"  
+  # }
+
+  default = {}
 }

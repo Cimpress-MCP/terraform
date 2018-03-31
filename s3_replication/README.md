@@ -27,7 +27,7 @@ EOF
 }
 
 module "s3_repl" {
-  source = "/path/to/module/s3_replication"
+  source = "git::https://github.com/Cimpress-MCP/terraform.git//s3_replication"
   
   main_bucket_name = "my-new-bucket"
 
@@ -35,10 +35,10 @@ module "s3_repl" {
 
   replica_region = "us-west-1"
 
-  tag_name = "my-new-bucket"
-
-  tag_project = "my-super-project"
-  tag_squad = "SET"
+  extra_tags = {
+    "Owner" = "davide barbato",
+    "Squad" = "Ops"
+  }
 
   access_roles_name = ["${aws_iam_role.access_role.name}"]
 }

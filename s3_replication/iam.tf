@@ -2,7 +2,7 @@
 #
 #
 resource "aws_iam_role" "replica_role" {
-  name               = "${var.tag_name}-replication_role"
+  name               = "${var.main_bucket_name}-replication_role"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -78,24 +78,24 @@ data "aws_iam_policy_document" "replica_access_policy" {
 }
 
 resource "aws_iam_policy" "s3_policy" {
-  name = "${var.tag_name}-policy"
+  name = "${var.main_bucket_name}-policy"
   policy =  "${data.aws_iam_policy_document.s3_access_policy.json}"
 }
 
 resource "aws_iam_policy" "replica_policy" {
-  name = "${var.tag_name}-replication_policy"
+  name = "${var.main_bucket_name}-replication_policy"
   policy = "${data.aws_iam_policy_document.replica_access_policy.json}"
 }
 
 
 resource "aws_iam_policy_attachment" "replica_attach" {
-  name = "${var.tag_name}-repl_policy_attachment"
+  name = "${var.main_bucket_name}-repl_policy_attachment"
   roles = ["${aws_iam_role.replica_role.name}"]
   policy_arn = "${aws_iam_policy.replica_policy.arn}"
 }
 
 resource "aws_iam_policy_attachment" "s3_attach" {
-  name = "${var.tag_name}-policy_attachment"
+  name = "${var.main_bucket_name}-policy_attachment"
   roles = ["${var.access_roles_name}"]
   policy_arn = "${aws_iam_policy.s3_policy.arn}"
 }

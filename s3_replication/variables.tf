@@ -47,17 +47,15 @@ variable "transition_days" {
 ############## TAGS #################
 #
 #
-variable "tag_name" {
-  type = "string"
-  description = "bucket name (tag)"
-}
+variable "extra_tags" {
+  type = "map"
+  description = "A map of additional tags to add to the S3 buckets. Each element in the map must have the key = value format"
 
-variable "tag_project" {
-  type = "string"
-  description = "bucket's creator"
-}
+  # example:
+  # extra_tags = {
+  #   "Environment" = "Dev",
+  #   "Squad" = "Ops"  
+  # }
 
-variable "tag_squad" {
-  type = "string"
-  description = "bucket's squad"
+  default = {}
 }

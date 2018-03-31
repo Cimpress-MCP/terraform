@@ -46,11 +46,7 @@ resource "aws_s3_bucket" "s3_bucket" {
     }
   }
 
-  tags {
-    Name = "${var.tag_name}"
-    Project = "${var.tag_project}"
-    Squad = "${var.tag_squad}"
-  }
+  tags = "${merge(map("Name", var.main_bucket_name), extra_tags)}"
 }
 
 resource "aws_s3_bucket" "s3_repl_bucket" {
@@ -82,11 +78,8 @@ resource "aws_s3_bucket" "s3_repl_bucket" {
     }
   }
 
-  tags {
-    Name = "${var.tag_name}-repl"
-    Project = "${var.tag_project}"
-    Squad = "${var.tag_squad}"
-  }
+  
+  tags = "${merge(map("Name", "${var.main_bucket_name}-repl"), extra_tags)}"
 }
 
 # logging of the source bucket
@@ -108,9 +101,5 @@ resource "aws_s3_bucket" "log_bucket" {
     }
   }
 
-  tags {
-    Name = "${var.tag_name}-logs"
-    Project = "${var.tag_project}"
-    Squad = "${var.tag_squad}"
-  }
+  tags = "${merge(map("Name", "${var.main_bucket_name}-logs"), extra_tags)}"
 }

@@ -46,7 +46,7 @@ resource "aws_s3_bucket" "s3_bucket" {
     }
   }
 
-  tags = "${merge(map("Name", var.main_bucket_name), extra_tags)}"
+  tags = "${merge(map("Name", var.main_bucket_name), var.extra_tags)}"
 }
 
 resource "aws_s3_bucket" "s3_repl_bucket" {
@@ -79,7 +79,7 @@ resource "aws_s3_bucket" "s3_repl_bucket" {
   }
 
   
-  tags = "${merge(map("Name", "${var.main_bucket_name}-repl"), extra_tags)}"
+  tags = "${merge(map("Name", "${var.main_bucket_name}-repl"), var.extra_tags)}"
 }
 
 # logging of the source bucket
@@ -101,5 +101,5 @@ resource "aws_s3_bucket" "log_bucket" {
     }
   }
 
-  tags = "${merge(map("Name", "${var.main_bucket_name}-logs"), extra_tags)}"
+  tags = "${merge(map("Name", "${var.main_bucket_name}-logs"), var.extra_tags)}"
 }

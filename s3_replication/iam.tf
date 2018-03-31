@@ -78,7 +78,7 @@ data "aws_iam_policy_document" "replica_access_policy" {
 }
 
 resource "aws_iam_policy" "s3_policy" {
-  name = "${var.tag_name}-ossec_policy"
+  name = "${var.tag_name}-policy"
   policy =  "${data.aws_iam_policy_document.s3_access_policy.json}"
 }
 
@@ -95,7 +95,7 @@ resource "aws_iam_policy_attachment" "replica_attach" {
 }
 
 resource "aws_iam_policy_attachment" "s3_attach" {
-  name = "${var.tag_name}-ossec_policy_attachment"
+  name = "${var.tag_name}-policy_attachment"
   roles = ["${var.access_roles_name}"]
   policy_arn = "${aws_iam_policy.s3_policy.arn}"
 }

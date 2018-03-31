@@ -8,8 +8,6 @@ variable "access_roles_name" {
   description = "list of roles that need access to the buckets"
 }
 
-data "aws_caller_identity" "current" {}
-
 ################## REPLICA ###############
 #
 #

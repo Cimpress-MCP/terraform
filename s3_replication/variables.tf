@@ -8,6 +8,12 @@ variable "access_roles_name" {
   description = "list of roles that need access to the buckets"
 }
 
+variable "force_destroy" {
+  type = "string"
+  description = "S3 bucket force destroy"
+  default = false
+}
+
 ################## REPLICA ###############
 #
 #

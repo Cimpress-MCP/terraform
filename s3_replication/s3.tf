@@ -3,7 +3,7 @@ resource "aws_s3_bucket" "s3_bucket" {
   bucket = "${var.main_bucket_name}"
   acl = "private"
 
-  force_destroy = true
+  force_destroy = "${var.force_destroy}"
 
   versioning {
     enabled = true
@@ -53,7 +53,7 @@ resource "aws_s3_bucket" "s3_repl_bucket" {
   provider = "aws.repl"
   bucket   = "${var.replication_bucket_name}"
 
-  force_destroy = true
+  force_destroy = "${var.force_destroy}"
 
   lifecycle_rule {
     id = "rotate"
@@ -87,7 +87,7 @@ resource "aws_s3_bucket" "log_bucket" {
   bucket = "${var.main_bucket_name}-logs"
   acl    = "log-delivery-write"
 
-  force_destroy = true
+  force_destroy = "${var.force_destroy}"
 
   versioning {
     enabled = true

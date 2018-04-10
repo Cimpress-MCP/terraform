@@ -1,7 +1,7 @@
 # this is the main (source) bucket
 resource "aws_s3_bucket" "s3_bucket" {
   bucket = "${var.main_bucket_name}"
-  acl = "private"
+  acl    = "private"
 
   force_destroy = "${var.force_destroy}"
 
@@ -14,20 +14,21 @@ resource "aws_s3_bucket" "s3_bucket" {
   }
 
   lifecycle_rule {
-    id = "rotate"
+    id      = "rotate"
     enabled = true
-    prefix = ""
+    prefix  = ""
 
     transition {
-      days = "${var.transition_days}"
+      days          = "${var.transition_days}"
       storage_class = "${var.transition_storage_class}"
     }
   }
 
   replication_configuration {
     role = "${aws_iam_role.replica_role.arn}"
+
     rules {
-      id = "repl_rule"
+      id     = "repl_rule"
       prefix = ""
       status = "Enabled"
 
@@ -50,18 +51,18 @@ resource "aws_s3_bucket" "s3_bucket" {
 }
 
 resource "aws_s3_bucket" "s3_repl_bucket" {
-  provider = "aws.repl"
-  bucket   = "${var.replication_bucket_name}"
+  # provider = "aws.repl"
+  bucket = "${var.replication_bucket_name}"
 
   force_destroy = "${var.force_destroy}"
 
   lifecycle_rule {
-    id = "rotate"
+    id      = "rotate"
     enabled = true
-    prefix = ""
+    prefix  = ""
 
     transition {
-      days = "${var.transition_days}"
+      days          = "${var.transition_days}"
       storage_class = "${var.transition_storage_class}"
     }
   }
@@ -78,7 +79,6 @@ resource "aws_s3_bucket" "s3_repl_bucket" {
     }
   }
 
-  
   tags = "${merge(map("Name", "${var.main_bucket_name}-repl"), var.extra_tags)}"
 }
 

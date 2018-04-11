@@ -51,7 +51,7 @@ resource "aws_s3_bucket" "s3_bucket" {
 }
 
 resource "aws_s3_bucket" "s3_repl_bucket" {
-  # provider = "aws.repl"
+  provider = "aws.repl"
   bucket = "${var.replication_bucket_name}"
 
   force_destroy = "${var.force_destroy}"

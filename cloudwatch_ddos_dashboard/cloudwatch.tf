@@ -1,6 +1,6 @@
 resource "aws_cloudwatch_dashboard" "main" {
    dashboard_name = "${var.dashboard_name}"
-   count = "${var.app_lb ? 1 : 0}"
+   count = "${var.app_lb ? 0 : 1}"
 
    dashboard_body = <<EOF
    {

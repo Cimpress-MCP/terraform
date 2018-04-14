@@ -8,6 +8,12 @@ variable "lb_name" {
   description = "Load Balancer name to monitor"
 }
 
+variable "app_lb" {
+  type = "string"
+  description = "Write here 'true' if you're attaching this dashboard to an Application Load Balaner rather than a Classic Load Balaner (default 'false')"
+  default = false
+}
+
 variable "period" {
   type = "string"
   description = "Period to update the chart (in seconds, default 60)"

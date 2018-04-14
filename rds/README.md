@@ -22,8 +22,7 @@ By default, it creates an RDS instance with the following features:
 - `instance_sg_id` - Security group ID of the instance allowed to connect to the DB
 - `vpc_id` - ID of the VPC where to deploy the RDS instance
 - `subnet_ids` - List of VPC's subnets IDs for RDS deployment -in a string form, e.g. "subnet-99a104c1,subnet-e1a93c97"
-- `project` - Project name
-- `squad` - Owner squad
+- `extra_tags` - a map of tags to apply to the RDS instance and the security group
 
 ## Usage
 In the follwing example, `instance_sg_id` refers to the security group from
@@ -46,8 +45,10 @@ module "rds" {
   instance_sg_id = "${aws_security_group.instace_sg.id}"
   vpc_id = "vpc-e568d681"
   subnet_ids = "subnet-99a104c1,subnet-e1a93c97"
-  project = "ohmy-rds"
-  squad = "SET"
+  extra_tags = {
+    "Project" = "my-new-rds",
+    "Owner" = "davinerd"
+  }
 }
 ```
 

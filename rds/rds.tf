@@ -20,11 +20,7 @@ resource "aws_db_instance" "rds_instance" {
 
   storage_encrypted = "${var.encryption}"
 
-  tags {
-    Name  = "${var.rds_name}"
-    Project = "${var.project}"
-    Squad = "${var.squad}"
-  }
+  tags = "${merge(map("Name", "${var.rds_name}"), var.extra_tags)}"
 }
 
 resource "aws_db_subnet_group" "rds_subnet" {
@@ -45,9 +41,5 @@ resource "aws_security_group" "rds_sg" {
     security_groups = ["${var.instance_sg_id}"]
   }
 
-  tags {
-    Name  = "${var.rds_name}-rds-sg"
-    Project = "${var.project}"
-    Squad = "${var.squad}"
-  }
+  tags = "${merge(map("Name", "${var.rds_name}-rds-sg"), var.extra_tags)}"
 }

@@ -14,6 +14,17 @@ variable "app_lb" {
   default = false
 }
 
+variable "app_elb" {
+  type = "string"
+  default = "AWS/ApplicationELB"
+}
+
+variable "elb" {
+  type = "string"
+  default = "AWS/ELB"
+}
+
+
 variable "period" {
   type = "string"
   description = "Period to update the chart (in seconds, default 60)"

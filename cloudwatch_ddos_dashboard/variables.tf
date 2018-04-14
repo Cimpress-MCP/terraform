@@ -14,26 +14,6 @@ variable "app_lb" {
   default = false
 }
 
-variable "app_elb" {
-  type = "string"
-  default = "AWS/ApplicationELB"
-}
-
-variable "app_elb_name" {
-  type = "string"
-  default = "LoadBalancer"
-}
-
-variable "elb" {
-  type = "string"
-  default = "AWS/ELB"
-}
-
-variable "elb_name" {
-  type = "string"
-  default = "LoadBalancerName"
-}
-
 variable "period" {
   type = "string"
   description = "Period to update the chart (in seconds, default 60)"

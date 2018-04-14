@@ -3,9 +3,9 @@ variable "dashboard_name" {
   description = "Cloudwatch's dashboard name"
 }
 
-variable "asg_name" {
+variable "lb_name" {
   type = "string"
-  description = "ASG name to monitor"
+  description = "Load Balancer name to monitor"
 }
 
 variable "period" {

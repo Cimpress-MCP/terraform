@@ -14,7 +14,7 @@ resource "aws_cloudwatch_dashboard" "main" {
                 "view": "timeSeries",
                 "stacked": true,
                 "metrics": [
-                    [ "AWS/ELB", "SurgeQueueLength", "LoadBalancerName", "${var.asg_name}", { "period": "${var.period}" } ],
+                    [ "AWS/ELB", "SurgeQueueLength", "LoadBalancerName", "${var.lb_name}", { "period": "${var.period}" } ],
                     [ ".", "RequestCount", ".", ".", { "stat": "Sum", "period": "${var.period}" } ],
                     [ ".", "BackendConnectionErrors", ".", ".", { "stat": "Sum", "period": "${var.period}" } ],
                     [ ".", "HTTPCode_ELB_5XX", ".", ".", { "stat": "Sum", "period": "${var.period}" } ],

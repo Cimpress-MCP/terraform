@@ -49,6 +49,6 @@ module "cloudwatch_dashboard" {
 
   dashboard_name = "monitor-ddos"
 
-  asg_name = "${aws_elb.bar.name}"
+  lb_name = "${aws_elb.bar.name}"
 }
 ```

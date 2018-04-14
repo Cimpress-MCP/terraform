@@ -1,7 +1,7 @@
 # Cloudwatch DDoS Dashboard
-This terraform module allows you to create a Cloudwatch dashboard with metrics used to monitor your ELB's network activity, to identify possible surge in traffic which, in turn, may be an indicator of a DDoS attack.
+This terraform module allows you to create a Cloudwatch dashboard with metrics used to monitor your LB's network activity, to identify possible surge in traffic which, in turn, may be an indicator of a DDoS attack.
 
-Metrics collected are:
+Metrics collected for Classic Load Balancers are:
 * RequestCount
 * BackendConnectionErrors
 * HTTPCode_ELB_5XX
@@ -9,7 +9,21 @@ Metrics collected are:
 * HTTPCode_Backend_3XX
 * HTTPCode_Backend_4XX
 
+Metrics collected for Application Load Balancers are:
+* RequestCount
+* ActiveConnectionCount
+* HTTPCode_ELB_4XX_Count
+* TargetResponseTime
+* HTTPCode_Target_3XX_Count
+* HTTPCode_Target_4XX_Count
+
 The metrics are updated every 60 seconds.
+
+# Module input variables
+- `dashboard_name` - CloudWatch's dashboard name
+- `app_lb` - true/false value. Select `true` if the dashboard is attached to an Application Load Balancer
+- `lb_name` - Load Balancer's name (if `app_lb` is true, you want to select the lb's `arn_suffix` here)
+- `period` - how often the data will be updated (default 60 seconds)
 
 # Example
 

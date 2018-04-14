@@ -53,7 +53,7 @@ resource "aws_cloudwatch_dashboard" "main_alb" {
                     [ "AWS/ApplicationELB", "RequestCount", "LoadBalancer", "${var.lb_name}", { "stat": "Sum", "period": "${var.period}" } ],
                     [ ".", "ActiveConnectionCount", ".", ".", { "stat": "Sum", "period": "${var.period}" } ],
                     [ ".", "HTTPCode_ELB_4XX_Count", ".", ".", { "stat": "Sum", "period": "${var.period}" } ],
-                    [ ".", "TargetResponseTime", ".", ".", { "stat": "Sum", "period": "${var.period}" } ],
+                    [ ".", "TargetResponseTime", ".", ".", { "stat": "Average", "period": "${var.period}" } ],
                     [ ".", "HTTPCode_Target_3XX_Count", ".", ".", { "stat": "Sum", "period": "${var.period}" } ],
                     [ ".", "HTTPCode_Target_4XX_Count", ".", ".", { "stat": "Sum", "period": "${var.period}" } ]
                 ],

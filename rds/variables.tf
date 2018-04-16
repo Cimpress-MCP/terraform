@@ -86,16 +86,6 @@ variable "encryption" {
 ############ Tags ##############
 #
 #
-variable "project" {
-  type = "string"
-  description = "The Project Name for this infrastructure"
-}
-
-variable "squad" {
-  type = "string"
-  description = "The squad/team who owns the infrastructure"
-}
-
 variable "extra_tags" {
   type = "map"
   description = "A map of additional tags to add to ELBs and SGs. Each element in the map must have the key = value format"

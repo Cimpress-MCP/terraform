@@ -67,15 +67,19 @@ variable "name" {
   description = "CloudFormation Stack Name"
 }
 
-variable "squad" {
-  type = "string"
-  description = "Owner Squad"
+variable "extra_tags" {
+  type = "map"
+  description = "A map of additional tags to add to ELBs and SGs. Each element in the map must have the key = value format"
+
+  # example:
+  # extra_tags = {
+  #   "Environment" = "Dev",
+  #   "Squad" = "Ops"
+  # }
+
+  default = {}
 }
 
-variable "project" {
-  type = "string"
-  description = "Project Name"
-}
 /*
 variable "alb_ids" {
   type = "list"

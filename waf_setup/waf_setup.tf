@@ -21,10 +21,8 @@ resource "aws_cloudformation_stack" "waf_security_automations_alb" {
 
   on_failure = "ROLLBACK"
 
-  tags {
-    project = "${var.project}"
-    squad = "${var.squad}"
-  }
+  tags = "${merge(map("Name", "${var.name}"), var.extra_tags)}"
+
   #template_url = "${file("${path.module}/aws-waf-security-automations-alb-no_desc.tpl")}" - max 1024 lines!
   template_body = <<STACK
   {

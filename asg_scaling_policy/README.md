@@ -42,7 +42,7 @@ resource "aws_autoscaling_group" "bar" {
 }
 
 module "asg_scaling" {
-  source = "git::https://github.com/Cimpress-MCP/terraform.git//s3_replication"
+  source = "git::https://github.com/Cimpress-MCP/terraform.git//asg_scaling_policy"
 
   name = "custom-asg-scaling"
 

@@ -31,7 +31,7 @@ publicly accessible).
 
 ```
 module "rds" {
-  source = "git::https://cimpress.githost.io/ips/terraform_modules/rds.git"
+  source = "git::https://github.com/Cimpress-MCP/terraform.git//rds"
   rds_name = "ohmy-rds"
   storage_size = "10"
   engine = "postgres"

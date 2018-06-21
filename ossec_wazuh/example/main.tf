@@ -50,7 +50,8 @@ module "ossec" {
 
   sns_topic = "arn:aws:sns:eu-west-1:XXXXXXXX:SlackNotify"
 
-  ssl_certificate_id = "arn:aws:acm:eu-west-1:XXXXXXXX:certificate/yyyyyyyy-xxxx-zzzz-vvvv-kkkkkkkkkkkk"
+  route53_zone_id = "XXXXXXXXXXXXXX"
+  dns_name = "${var.dns_record}"
 }
 
 module "cloudwatch_dashboard" {
@@ -71,16 +72,4 @@ module "inspector" {
   template_duration = 3600
 
   cloudwatch_sched_rule = "rate(7 days)"
-}
-
-resource "aws_route53_record" "www" {
-  zone_id = "XXXXXXXXXXXXXX"
-  name    = "${var.dns_record}"
-  type    = "A"
-
-  alias {
-    name    = "${module.ossec.lb_dns}"
-    zone_id = "${module.ossec.lb_zone_id}"
-    evaluate_target_health = false
-  }
 }

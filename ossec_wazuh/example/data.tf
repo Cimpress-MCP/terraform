@@ -18,16 +18,6 @@ data "aws_ami" "amzn_ossec_ami" {
     name   = "tag-key"
     values = ["Service"]
   }
-
-  filter {
-    name   = "tag-value"
-    values = ["true"]
-  }
-
-  filter {
-    name   = "tag-key"
-    values = ["latestAmi"]
-  }
 }
 
 data "vault_generic_secret" "wazuh_creds" {

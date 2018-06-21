@@ -11,10 +11,6 @@ variable "keypair_name" {
   description = "Key Pair name to use"
 }
 
-variable "wui_passwd" {
-  type = "string"
-  description = "Password to access Wazuh WUI"
-}
 
 ############## VAULT STUFF ################
 #

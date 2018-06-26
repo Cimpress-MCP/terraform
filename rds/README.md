@@ -11,6 +11,7 @@ By default, it creates an RDS instance with the following features:
 ## Module Input Variables
 - `rds_name` - Name of the RDS instance to deploy
 - `storage_size` - DB size (in Gb)
+- `storage_type` - Type of DB Storage, defaults to gp2
 - `engine` - DB Engine type, such as mysql or postgres 
 - `engine_version` - eg. 9.5.4 in case of postgres
 - `instance_class` - instance size, eg. db.t2.micro (see [this table](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html) for more details)
@@ -18,8 +19,13 @@ By default, it creates an RDS instance with the following features:
 - `db_user` - db admin username (lowercase, no special chars)
 - `db_passwd` - db admin password (must be longer than 8 chars)
 - `db_port` - DB port (needed for security group)
+- `multi_az` - RDS Multi-AZ support, defaults to true
+- `public_access` - Provides Public access to DB, defaults to false
 - `skip_final_snapshot` - if true (default), DB won't be backed up before deletion
+- `retention_period` - RDS Backup Retention Period, defaults to 7 days
 - `instance_sg_id` - Security group ID of the instance allowed to connect to the DB
+- `encryption` - Enable or disable encrypted data, defaults to true
+- `license_model` - optional AWS license model required for some database types
 - `vpc_id` - ID of the VPC where to deploy the RDS instance
 - `subnet_ids` - List of VPC's subnets IDs for RDS deployment -in a string form, e.g. "subnet-99a104c1,subnet-e1a93c97"
 - `extra_tags` - a map of tags to apply to the RDS instance and the security group

@@ -116,3 +116,16 @@ variable "subnet_ids" {
   type        = "string"
   description = "Subnet's ids (comma seperated)"
 }
+
+## db timetouts
+variable "db_create_timeout" {
+  type        = "string"
+  description = "Timeout to create database instance"
+  default     = "10m"
+}
+
+variable "db_delete_timeout" {
+  type        = "string"
+  description = "Database delete timeout"
+  default     = "1h"
+}

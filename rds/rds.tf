@@ -22,6 +22,12 @@ resource "aws_db_instance" "rds_instance" {
   storage_encrypted = "${var.encryption}"
 
   tags = "${merge(map("Name", "${var.rds_name}"), var.extra_tags)}"
+
+  timeouts {
+    create = "${var.db_create_timeout}"
+    delete = "${var.db_delete_timeout}"
+    update = "${var.db_update_timeout}"
+  }
 }
 
 resource "aws_db_subnet_group" "rds_subnet" {

@@ -1,18 +1,22 @@
+
 # RDS
+
 The following terraform module creates an RDS instance.
 
 By default, it creates an RDS instance with the following features:
+
 * multi-az
 * no public access
-* gp2 as storage type 
+* gp2 as storage type
 * 7 days as retention period
 * encryption
 
 ## Module Input Variables
+
 - `rds_name` - Name of the RDS instance to deploy
 - `storage_size` - DB size (in Gb)
 - `storage_type` - Type of DB Storage, defaults to gp2
-- `engine` - DB Engine type, such as mysql or postgres 
+- `engine` - DB Engine type, such as mysql or postgres
 - `engine_version` - eg. 9.5.4 in case of postgres
 - `instance_class` - instance size, eg. db.t2.micro (see [this table](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html) for more details)
 - `db_name` - Name of the DB
@@ -31,6 +35,7 @@ By default, it creates an RDS instance with the following features:
 - `extra_tags` - a map of tags to apply to the RDS instance and the security group
 
 ## Usage
+
 In the follwing example, `instance_sg_id` refers to the security group from
 where it's possible to access the RDS instance (since, by default, it's not
 publicly accessible).
@@ -60,4 +65,4 @@ module "rds" {
 
 ## Output
 
- - `rds_endpoint` - The endpoint of the DB instance
+- `rds_endpoint` - The endpoint of the DB instance

@@ -23,6 +23,9 @@ By default, it creates an RDS instance with the following features:
 - `db_user` - db admin username (lowercase, no special chars)
 - `db_passwd` - db admin password (must be longer than 8 chars)
 - `db_port` - DB port (needed for security group)
+- `db_create_timeout` - Time to wait for Database creation, default 10m
+- `db_update_timeout` - Time to wait for Database updates to complete, default 30m
+- `db_delete_timeout` - Time to wait for Database deletion, default 1h
 - `multi_az` - RDS Multi-AZ support, defaults to true
 - `public_access` - Provides Public access to DB, defaults to false
 - `skip_final_snapshot` - if true (default), DB won't be backed up before deletion
@@ -60,6 +63,10 @@ module "rds" {
     "Project" = "my-new-rds",
     "Owner" = "davinerd"
   }
+
+  db_create_timeout = "1h" // my database takes a long time to provision, I want to wait for it
+  db_update_timeout = "2h" // updating my database takes a long time, we want it to complete
+  db_delete_timeout = "4h" // deletion takes even longer
 }
 ```
 

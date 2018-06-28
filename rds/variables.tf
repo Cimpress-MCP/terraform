@@ -125,9 +125,9 @@ variable "db_create_timeout" {
 }
 
 variable "db_update_timeout" {
-  type       = "string"
-  descrition = "Timeout to update the database instance"
-  default    = "30m"
+  type        = "string"
+  description = "Timeout to update the database instance"
+  default     = "30m"
 }
 
 variable "db_delete_timeout" {

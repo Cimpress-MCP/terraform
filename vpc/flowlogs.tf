@@ -3,10 +3,10 @@ resource "aws_cloudwatch_log_group" "vpc_cloudwatch_group" {
 }
 
 resource "aws_flow_log" "vpc_flow_log" {
-  log_group_name = "${aws_cloudwatch_log_group.vpc_cloudwatch_group.name}"
-  iam_role_arn   = "${aws_iam_role.vpc_flow_role.arn}"
-  vpc_id         = "${aws_vpc.vpc.id}"
-  traffic_type   = "ALL"
+  log_destination = "${aws_cloudwatch_log_group.vpc_cloudwatch_group.name}"
+  iam_role_arn    = "${aws_iam_role.vpc_flow_role.arn}"
+  vpc_id          = "${aws_vpc.vpc.id}"
+  traffic_type    = "ALL"
 }
 
 resource "aws_iam_role" "vpc_flow_role" {

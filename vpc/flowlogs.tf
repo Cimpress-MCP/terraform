@@ -3,7 +3,7 @@ resource "aws_cloudwatch_log_group" "vpc_cloudwatch_group" {
 }
 
 resource "aws_flow_log" "vpc_flow_log" {
-  log_destination = "${aws_cloudwatch_log_group.vpc_cloudwatch_group.name}"
+  log_destination = "${aws_cloudwatch_log_group.vpc_cloudwatch_group.arn}"
   iam_role_arn    = "${aws_iam_role.vpc_flow_role.arn}"
   vpc_id          = "${aws_vpc.vpc.id}"
   traffic_type    = "ALL"

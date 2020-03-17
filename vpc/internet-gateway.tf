@@ -5,13 +5,13 @@
 ##################################################################################################################
 
 resource "aws_internet_gateway" "internet_gateway" {
-  vpc_id = "${aws_vpc.vpc.id}"
-  count  = "${(var.create_public_subnets == "1" ? 1 : 0)}"
+  vpc_id = aws_vpc.vpc.id
+  count  = (var.create_public_subnets ? 1 : 0)
 
-  tags   = "${merge(var.default_tags, var.tags, map("Name", format("%s-internet-gateway", var.vpc_name)), map("Created", format("%s", timestamp())))}"
+  tags   = merge(var.default_tags, var.tags, map("Name", format("%s-internet-gateway", var.vpc_name)), map("Created", format("%s", timestamp())))
 
   lifecycle {
-      ignore_changes = "tags.Created"
+      ignore_changes = [tags.Created]
   }
 }
 
@@ -22,14 +22,14 @@ resource "aws_internet_gateway" "internet_gateway" {
 ##################################################################################################################
 
 resource "aws_route_table" "public_route_table" {
-  vpc_id           = "${aws_vpc.vpc.id}"
-  count            = "${(var.create_public_subnets == "1" ? 1 : 0)}"
+  vpc_id           = aws_vpc.vpc.id
+  count            = (var.create_public_subnets ? 1 : 0)
 
-  propagating_vgws = ["${var.public_propagating_vgws}"]
-  tags             = "${merge(var.default_tags, var.tags, map("Name", format("%s-route-table-public", var.vpc_name)), map("Created", format("%s", timestamp())))}"
+  propagating_vgws = var.public_propagating_vgws
+  tags             = merge(var.default_tags, var.tags, map("Name", format("%s-route-table-public", var.vpc_name)), map("Created", format("%s", timestamp())))
 
   lifecycle {
-      ignore_changes = "tags.Created"
+      ignore_changes = [tags.Created]
   }
 }
 
@@ -40,11 +40,11 @@ resource "aws_route_table" "public_route_table" {
 ##################################################################################################################
 
 resource "aws_route" "internet_gateway_public_route" {
-  count                  = "${(var.create_public_subnets == "1" ? 1 : 0)}"
+  count                  = (var.create_public_subnets ? 1 : 0)
 
-  route_table_id         = "${aws_route_table.public_route_table.id}"
+  route_table_id         = aws_route_table.public_route_table[count.index].id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = "${aws_internet_gateway.internet_gateway.id}"
+  gateway_id             = aws_internet_gateway.internet_gateway[count.index].id
 }
 
 ##################################################################################################################
@@ -54,8 +54,8 @@ resource "aws_route" "internet_gateway_public_route" {
 ##################################################################################################################
 
 resource "aws_route_table_association" "public_rt_association" {
-  count          = "${(var.create_public_subnets == "1" ? (var.automatic_networking == "1" ? (var.manual_azs ? length(var.azs) : var.az_limit) : (var.automatic_azs == "1" ? var.az_limit : length(var.public_subnets))) : 0)}"
+  count          = (var.create_public_subnets  ? (var.automatic_networking ? (var.manual_azs ? length(var.azs) : var.az_limit) : (var.automatic_azs ? var.az_limit : length(var.public_subnets))) : 0)
 
-  subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
-  route_table_id = "${aws_route_table.public_route_table.id}"
+  subnet_id      = element(aws_subnet.public.*.id, count.index)
+  route_table_id = element(aws_route_table.public_route_table.*.id, count.index)
 }

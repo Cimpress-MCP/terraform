@@ -1,8 +1,8 @@
 resource "aws_s3_bucket" "s3_bucket" {
-  bucket = "${var.bucket_name}"
+  bucket = var.bucket_name
   acl = "private"
 
-  force_destroy = "${var.force_destroy}"
+  force_destroy = var.force_destroy
 
   versioning {
     enabled = true
@@ -14,8 +14,8 @@ resource "aws_s3_bucket" "s3_bucket" {
     prefix = ""
 
     transition {
-      days = "${var.transition_days}"
-      storage_class = "${var.transition_storage_class}"
+      days = var.transition_days
+      storage_class = var.transition_storage_class
     }
   }
 
@@ -41,5 +41,5 @@ resource "aws_s3_bucket" "s3_bucket" {
   }
   POLICY
   
-  tags = "${merge(map("Name", var.bucket_name), var.extra_tags)}"
+  tags = merge(map("Name", var.bucket_name), var.extra_tags
 }

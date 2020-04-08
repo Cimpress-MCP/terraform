@@ -3,7 +3,7 @@ data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
 variable "region_identifier" {
-  type = "map"
+  type = map
   description = "Region identifier"
   default = {
     us-east-1 = "127311923021"

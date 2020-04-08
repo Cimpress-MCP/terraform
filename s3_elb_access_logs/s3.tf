@@ -41,5 +41,5 @@ resource "aws_s3_bucket" "s3_bucket" {
   }
   POLICY
   
-  tags = merge(map("Name", var.bucket_name), var.extra_tags
+  tags = merge(map("Name", var.bucket_name), var.extra_tags)
 }

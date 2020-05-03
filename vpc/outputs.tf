@@ -8,10 +8,10 @@ output "account_id" {
   value = "${data.aws_caller_identity.current.account_id}"
 }
 
-/* 
+/*
   TODO  fix this for new terraform output syntax
         Terraform does not allow conditional operator within outputs
-        
+
 output "availability_zones" {
   value = ["${(var.manual_azs == "1" ? var.azs : data.aws_availability_zones.available.names)}"]
 }
@@ -43,6 +43,7 @@ output "main_route_table_id" {
 
 output "private_subnets" {
   value = ["${aws_subnet.private.*.id}"]
+  type = list(string)
 }
 
 output "private_subnets_str" {

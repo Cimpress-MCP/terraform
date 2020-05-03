@@ -43,7 +43,6 @@ output "main_route_table_id" {
 
 output "private_subnets" {
   value = ["${aws_subnet.private.*.id}"]
-  type = list(string)
 }
 
 output "private_subnets_str" {

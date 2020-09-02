@@ -100,3 +100,7 @@ output "nat_gateway_ids" {
 output "nat_gateway_ids_str" {
   value = join(",", aws_nat_gateway.nat_gateway.*.id)
 }
+
+output "nat_gateway_public_ips" {
+  value = [aws_nat_gateway.nat_gateway.*.public_ip]
+}

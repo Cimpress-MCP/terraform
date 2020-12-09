@@ -5,7 +5,7 @@
 ##################################################################################################################
 
 resource "aws_eip" "nat_gateway_eip" {
-  vpc   = "true"
+  vpc   = true
   count = (var.create_private_subnets ? (var.create_public_subnets ? (var.automatic_networking ? (var.manual_azs ? length(var.azs) : var.az_limit) : (var.automatic_azs ? var.az_limit : length(var.azs))) : 0) : 0)
 }
 
@@ -34,7 +34,7 @@ resource "aws_route_table" "private_route_table" {
   count  = (var.create_private_subnets ? (var.automatic_networking ? (var.manual_azs ? length(var.azs) : var.az_limit) : (var.automatic_azs ? var.az_limit : length(var.azs))) : 0)
   vpc_id = aws_vpc.vpc.id
 
-  tags   = merge(var.default_tags, var.tags, map("Name", format("%s-route-table-private-%s", var.vpc_name, (var.automatic_networking ? (var.manual_azs ? var.azs[count.index] : data.aws_availability_zones.available.names[count.index]) : (var.automatic_azs ? data.aws_availability_zones.available.names[count.index] : var.azs[count.index])))), map("Created", format("%s", timestamp())))
+  tags   = merge(var.default_tags, var.tags, map("Name", format("%s-route-table-private-%s", var.vpc_name, (var.automatic_networking ? (var.manual_azs ? var.azs[count.index] : data.aws_availability_zones.available.names[count.index]) : (var.automatic_azs ? data.aws_availability_zones.available.names[count.index] : var.azs[count.index])))))
 
   lifecycle {
       ignore_changes = [tags.Created]

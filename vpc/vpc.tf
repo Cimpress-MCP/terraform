@@ -10,7 +10,7 @@ resource "aws_vpc" "vpc" {
   enable_dns_support   = var.enable_dns_hostnames
   enable_dns_hostnames = var.enable_dns_support
 
-  tags                 = merge(var.default_tags, var.tags, map("Name", format("%s", var.vpc_name)), map("Created", format("%s", timestamp())))
+  tags                 = merge(var.default_tags, var.tags, map("Name", format("%s", var.vpc_name)))
 
   lifecycle {
       ignore_changes = [tags.Created]

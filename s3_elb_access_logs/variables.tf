@@ -1,17 +1,17 @@
 
 variable "bucket_name" {
-  type = "string"
+  type = string
   description = "Bucket's name"
 }
 
 variable "transition_storage_class" {
-  type = "string"
+  type = string
   description = "Storage class for S3 bucket transition"
   default = "STANDARD_IA"
 }
 
 variable "transition_days" {
-  type = "string"
+  type = string
   description = "Days to start the transition"
   default = "60"
 }
@@ -25,7 +25,7 @@ variable "force_destroy" {
 #
 #
 variable "extra_tags" {
-  type = "map"
+  type = map(string)
   description = "A map of additional tags to add to the S3 buckets. Each element in the map must have the key = value format"
 
   # example:

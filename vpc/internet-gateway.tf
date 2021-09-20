@@ -8,7 +8,7 @@ resource "aws_internet_gateway" "internet_gateway" {
   vpc_id = aws_vpc.vpc.id
   count  = (var.create_public_subnets ? 1 : 0)
 
-  tags   = merge(var.default_tags, var.tags, map("Name", format("%s-internet-gateway", var.vpc_name)), map("Created", format("%s", timestamp())))
+  tags   = merge(var.default_tags, var.tags, map("Name", format("%s-internet-gateway", var.vpc_name)))
 
   lifecycle {
       ignore_changes = [tags.Created]
@@ -26,7 +26,7 @@ resource "aws_route_table" "public_route_table" {
   count            = (var.create_public_subnets ? 1 : 0)
 
   propagating_vgws = var.public_propagating_vgws
-  tags             = merge(var.default_tags, var.tags, map("Name", format("%s-route-table-public", var.vpc_name)), map("Created", format("%s", timestamp())))
+  tags             = merge(var.default_tags, var.tags, map("Name", format("%s-route-table-public", var.vpc_name)))
 
   lifecycle {
       ignore_changes = [tags.Created]
